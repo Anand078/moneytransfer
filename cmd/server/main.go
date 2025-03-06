@@ -1,7 +1,10 @@
 package main
 
-import "fmt"
+import "go.uber.org/zap"
 
 func main() {
-	fmt.Println("Initializing Money Transfer System...")
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+
+	// conf := config.LoadConfig()
 }
