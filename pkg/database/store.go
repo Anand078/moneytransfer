@@ -58,7 +58,7 @@ func (s *Store) Transfer(from, to string, amount float64) (float64, float64, err
 	return fromAcc.Balance, toAcc.Balance, nil
 }
 
-func GetAllAccounts(s *Store) map[string]model.Account {
+func (s *Store) GetAllAccounts() map[string]model.Account {
 	s.mu.RLock()
 	defer s.mu.RUnlock()
 

@@ -1,7 +1,11 @@
 package config
 
 import (
+	"encoding/json"
 	"log"
+	"os"
+	"path/filepath"
+	"runtime"
 
 	"github.com/spf13/viper"
 )
@@ -20,12 +24,18 @@ type Config struct {
 	InitialBalances []InitialBalance `mapstructure:"initial_balances"`
 }
 
+func getProjectRoot() string {
+	_, b, _, _ := runtime.Caller(0)
+	basePath := filepath.Dir(filepath.Dir(filepath.Dir(b))) // 3 levels up to project root
+	return basePath
+}
+
 func LoadConfig() Config {
 	viper.SetConfigName("config")
 	viper.SetConfigType("yaml")
-	viper.AddConfigPath("./configs")
+	viper.AddConfigPath(filepath.Join(getProjectRoot(), "configs"))
 
-	if err := viper.ReadConfig(); err != nil {
+	if err := viper.ReadInConfig(); err != nil {
 		log.Fatalf("Failed to read config: %v", err)
 	}
 
@@ -40,16 +50,17 @@ func LoadConfig() Config {
 }
 
 func loadInitialBalancesFile() []InitialBalance {
-	viper.SetConfigFile("configs/initial_balances.json")
-	viper.SetConfigType("json")
+	filePath := filepath.Join(getProjectRoot(), "configs", "initial_balances.json")
 
-	if err := viper.ReadInConfig(); err != nil {
-		log.Fatalf("Failed to read initial balances: %v", err)
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		log.Fatalf("Failed to read initial balances file: %v", err)
 	}
 
 	var balances []InitialBalance
-	if err := viper.Unmarshal(&balances); err != nil {
-		log.Fatalf("Failed to parse initial balances: %v", err)
+	if err := json.Unmarshal(data, &balances); err != nil {
+		log.Fatalf("Failed to parse initial balances file: %v", err)
 	}
+
 	return balances
 }
