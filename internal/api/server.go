@@ -18,6 +18,10 @@ type Server struct {
 	server   *http.Server
 }
 
+func (s *Server) Handler() http.Handler {
+	return s.server.Handler
+}
+
 func NewServer(service *service.TransferService, logger *zap.Logger) *Server {
 	handlers := NewHandlers(service, logger)
 
