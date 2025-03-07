@@ -1,5 +1,5 @@
 # Use the official Go image based on Alpine Linux
-FROM golang:1.21-alpine
+FROM golang:1.24-alpine
 
 WORKDIR /app
 
