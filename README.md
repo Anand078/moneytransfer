@@ -122,4 +122,16 @@ We've incorporated several real-world best practices:
 - Docker support for easy deployment
 - Automation through a Makefile
 
+## Future Implementations
+Although this project is fully production-ready, there are several exciting improvements we could explore in the future:
+
+- Persistent Storage: We could connect a robust database like PostgreSQL to ensure that all account data is stored reliably over time.
+- Authentication & Authorization: Implementing user authentication would help secure our API endpoints, making sure that only   authorized users can access them.
+- Rate Limiting: By adding rate limiting, we can protect the service from potential abuse by controlling the number of requests a single client can make.
+- Enhanced Error Handling: Introducing custom error types would allow us to provide more detailed and helpful error messages to developers and users.
+- API Documentation: Expanding our API documentation—perhaps by integrating tools like Swagger—would offer a richer experience for developers who interact with our service.
+- CI/CD Pipeline Enhancements: We could further automate our deployment process and add security checks within our CI pipeline, making our build and deployment process even smoother.
+
 Need help or have questions? Feel free to open an issue on GitHub!
+
+
